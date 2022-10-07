@@ -1,0 +1,26 @@
+{
+    "destination_folder": "f'{package_name}/{dest_variable}/{new_filename}.py'",
+    "code": [
+    "from dde_core.orm import CRUDBase",
+    "\nimport  ${package}.models.${filename} as models",
+    "\nimport  ${package}.schemas.${filename} as schemas",
+    
+    "\nclass CURD${classname}(",
+        "\n\tCRUDBase[",
+            "\n\t\tmodels.${classname},",
+            "\n\t\tschemas.${classname}CreateSchema,",
+            "\n\t\tschemas.${classname}UpdateSchema,",
+        "\n\t]",
+    "\n):",
+        "\n\tpass",
+    
+    "\ncrud_master_data = CURD${classname}(models.${classname})"],
+
+    "template_vars": {
+        "package":"$package_Name",
+        "classname":"$class_Name",
+        "filename":"$file_Name"
+
+    }
+
+}

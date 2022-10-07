@@ -1,0 +1,47 @@
+{
+    "destination_folder": "f'{package_name}/{dest_variable}/{new_filename}.py'",
+    "code": [
+    "from logging import getLogger",
+    "\nfrom typing import Any, Dict, List, Optional",
+    "\nfrom sqlalchemy.orm import Session",
+    
+    "\nfrom ${package}.schemas.${filename} import (",
+        "\n\t${classname}CreateSchema,",
+        "\n\t${classname}Schema,",
+        "\n\t${classname}UpdateSchema,",
+   "\n)",
+    "\nfrom crud.${filename} import crud_master_data\n",
+    
+    
+    "\nlogger = getLogger(__name__)",
+    
+    
+    "\nclass ${classname}Service:",
+        "\n\tdef __init__(self, session: Session) -> None:",
+            "\n\t\tself.session = session",
+    
+    
+        "\ndef get(self, id: int) -> Optional[${classname}]:",
+            "\n\tlogger.info(f'Fetching master data with id: {id}')",
+            "\n\treturn crud_master_data.get(",
+                "\n\t\tself.session, id",
+            "\n)",
+    
+        "\ndef create(self, data: ${classname}CreateSchema) -> ${classname}:",
+            "\n\treturn crud_master_data.create(self.session, data)",
+    
+        "\ndef update(self, id: int, data: ${classname}UpdateSchema) -> ${classname}:",
+            "\n\tmaster_data = self.get(id)",
+            "\n\treturn crud_master_data.create(self.session, master_data, data)",
+    
+        "\ndef delete(self, id: int) -> ${classname}:",
+            "\n\treturn crud_master_data.remove(self.session, id)"],
+    
+    "template_vars": {
+        "package":"$package_Name",
+        "classname":"$class_Name",
+        "filename":"$file_Name"
+
+    }
+
+}

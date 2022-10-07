@@ -1,0 +1,59 @@
+{
+    "destination_folder": "f'{package_name}/{dest_variable}/master_data/{item}/{new_filename}.py'",
+    "destination_folder_init_": "f'{package_name}/{dest_variable}/master_data/{item}/__init__.py'",
+    "template_vars":{
+        "package":"$package_Name","classname":"$class_Name","filename":"$file_Name"
+    },
+
+      "node":{
+    "code":[
+        "from graphene import relay",
+        "\nfrom graphene_sqlalchemy import SQLAlchemyObjectType",
+        "\nfrom ${package}.models.${filename} import ${classname} as MasterDataModel",
+        "\nclass ${classname}(SQLAlchemyObjectType):",
+            "\n\tclass Meta:",
+                "\n\t\tmodel = MasterDataModel",
+                "\n\t\tinterfaces = (relay.Node,)"
+            ],
+    "code_init_":[
+                "from .master_data import ${classname}",
+                "\n__all__ = ['${classname}']"
+            ]
+
+      },
+
+
+
+      "queries":{
+    "code":[
+        "import graphene",
+        "\nfrom dde_core.db import db",
+        "\nfrom graphene import ObjectType, relay",
+        "\nfrom graphene.types.scalars import ID",
+        "\nfrom ${package}.services.${filename} import MasterData",
+        "\nfrom ..node.master_data import MasterData",
+        
+        "\nclass ${classname}Query(ObjectType):",
+            "\n\tmaster_data = graphene.Field(",
+            "\n\tlambda: ${classname},",
+            "\n\targs={'id': graphene.Argument(ID, required=True)}",
+            "\n)",
+        "\ndef resolve_master_data(self, info):",
+            "\n\tmds = ${classname}Service(db.session)",
+            "\n\treturn mds.get(id)"
+            ],
+    "code_init_":[
+                "from .master_data import ${classname}Query",
+                "\n__all__ = ['${classname}Query']"
+            ]
+
+      },
+
+      "mutation":{
+    "code_init_":[
+        "from graphene.types.objecttype import ObjectType",
+        "\nclass MasterDataMutation(ObjectType):",
+            "\n\tpass"
+            ]
+      }
+  }

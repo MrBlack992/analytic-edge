@@ -1,0 +1,19 @@
+{
+    "destination_folder": "f'{package_name}/{dest_variable}/{new_filename}.py'",
+    "code":[
+        "from pydantic import BaseModel",
+        "\nclass ${classname}CreateSchema(BaseModel):",
+        "\n\tpass",
+        "\nclass ${classname}UpdateSchema(BaseModel):",
+        "\n\tpass",
+        "\nclass ${classname}Schema(BaseModel):",
+        "\n\tclass Config:",
+        "\n\t\torm_mode = True"
+    ],
+
+    "template_vars": {
+        "classname":"$class_Name"
+
+    }
+
+}
